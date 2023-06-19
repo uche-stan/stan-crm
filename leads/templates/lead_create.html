@@ -43,23 +43,6 @@
     </div>
   </section>
 
-<h1>Create a new lead</h1>
-
-<div>
-
-    <form action="" method="POST">
-
-        {% csrf_token %}
-
-        {{form.as_p}}
-
-        <input type="submit">
-
-    </form>
-</div>
-<div style="margin: 10px; text-align:center">
-    <a href="/lead-list/">Back to leads</a>
-</div>
     
 {% endblock  %}
     

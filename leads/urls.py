@@ -20,6 +20,8 @@ urlpatterns = [
     path('lead-confirm-update/<int:pk>', views.LeadDeleteView.as_view(), name='lead-confirm-delete'),
     path('lead-delete-alert/', views.delete_alert, name='delete-alert'),
     
+    path('assign-agent/<int:pk>', views.AssignAgentView.as_view(), name='assign-agent')
+    
     
     
 ]

@@ -6,15 +6,18 @@
 
 {% block content %}
 
+<h1> Create a new Password </h1>
+
+
 <form action="" method="POST">
 
     {% csrf_token %}
 
     {{form.as_p}}
 
-<button type="submit">Login</button>
+<button type="submit">Confrm Password</button>
 <br/>
-<a href="{% url 'password-reset' %}">Forgot about password?</a>
+
 
 </form>
 
