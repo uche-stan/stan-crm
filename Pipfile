@@ -7,6 +7,9 @@ name = "pypi"
 django = "*"
 pillow = "*"
 django-tailwindcss = "*"
+django-environ = "*"
+psycopg2-binary = "*"
+whitenoise = "*"
 
 [dev-packages]
 
