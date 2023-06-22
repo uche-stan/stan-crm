@@ -1,11 +1,16 @@
 from typing import Any, Dict
+from django.urls import reverse
 from django.db.models.query import QuerySet
-from django.forms.models import BaseModelForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.core.mail import send_mail
-from .models import Lead
-from .forms import LeadForm, CustomUserCreationForm, AssignAgentForm
+from .models import Lead, Category
+from .forms import (
+    LeadForm, 
+    CustomUserCreationForm, 
+    AssignAgentForm,
+    LeadcategoryUpdateForm
+)
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from agents.mixins import OrganiserAndLoginRequiredMixin
@@ -92,7 +97,7 @@ def lead_list(request):
 #generic base view
 ###################
 class LeadDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = 'detail_list.html'
+    template_name = 'lead_detail.html'
     context_object_name = "lead"
     
     def get_queryset(self):
@@ -113,7 +118,7 @@ class LeadDetailView(LoginRequiredMixin, generic.DetailView):
 def lead_detail_list(request, pk):
     lead = get_object_or_404(Lead, pk=pk)
     context = {'lead': lead}
-    return render(request, 'detail_list.html', context)
+    return render(request, 'lead_detail.html', context)
 ######################################################
 
 
@@ -169,7 +174,7 @@ class SuccessCreateView(generic.TemplateView):
 #generic base view
 ###################
 class LeadUpdateView(OrganiserAndLoginRequiredMixin, generic.UpdateView):
-    template_name = 'update.html'
+    template_name = 'lead_update.html'
     fields = '__all__'
     context_object_name = 'lead'
     success_url = '/lead-confirm-update/'
@@ -209,7 +214,7 @@ def lead_update_alert(request):
 #generic base view
 ###################
 class LeadDeleteView(OrganiserAndLoginRequiredMixin, generic.DeleteView):
-    template_name = 'confirm_delete.html'
+    template_name = 'lead_delete.html'
     context_object_name = 'lead'
     success_url = '/lead-delete-alert/'
     
@@ -241,7 +246,7 @@ def delete_alert(request):
 class AssignAgentView(OrganiserAndLoginRequiredMixin, generic.FormView):
     template_name = 'assign_agent.html'
     form_class = AssignAgentForm
-    success_url = '/lead-confirm-update/'
+    success_url = '/agent-assigned-update/'
     
     def get_form_kwargs(self, **kwargs):
         kwargs = super(AssignAgentView, self).get_form_kwargs(**kwargs)
@@ -270,3 +275,94 @@ class SignupView(generic.CreateView):
     success_url = '/login'
     
     
+def agent_assigned_alert(request):
+    return render(request, 'agent_assigned_alert.html')    
+    
+    
+# Category
+
+class CategoryListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'category_list.html'
+    context_object_name = "category_list"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CategoryListView, self).get_context_data(**kwargs)
+        user = self.request.user
+        
+        if user.is_organiser:
+            queryset = Lead.objects.filter(organisations=user.userprofile)
+        else:
+            queryset = Lead.objects.filter(organisations=user.agent.organisations)
+           
+        
+        context.update({
+            "unassigned_lead_count": queryset.filter(category__isnull=True).count()
+        })
+        return context
+    
+    def get_queryset(self):
+        user = self.request.user
+        
+        #initial queryset for the entire organisation
+        if user.is_organiser:
+            queryset = Category.objects.filter(organisations=user.userprofile)
+        else:
+            queryset = Category.objects.filter(organisations=user.agent.organisations)
+           
+        return queryset   
+    
+    
+class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = 'category_detail.html'    
+    context_object_name = "category"
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super(CategoryDetailView, self).get_context_data(**kwargs)
+        
+    #     leads = self.get_object().leads.all()
+        
+    #     context.update({
+    #         "leads": leads
+    #     })
+    #     return context
+    
+    
+    def get_queryset(self):
+        user = self.request.user
+        
+        #initial queryset for the entire organisation
+        if user.is_organiser:
+            queryset = Category.objects.filter(organisations=user.userprofile)
+        else:
+            queryset = Category.objects.filter(organisations=user.agent.organisations)
+           
+        return queryset   
+    
+
+
+
+class LeadCategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'lead_category_update.html'  
+    
+    form_class = LeadcategoryUpdateForm
+    context_object_name = 'lead'
+    # success_url = '/category-confirm-update/'
+    
+    def get_success_url(self):
+        return reverse("leads:lead-detail", kwargs={'pk':self.get_object().id})
+    
+    def get_queryset(self):
+        user = self.request.user
+        #initial queryset for the entire organisation
+        if user.is_organiser:
+            queryset = Lead.objects.filter(organisations=user.userprofile)
+        else:
+            queryset = Lead.objects.filter(organisations=user.agent.organisations)
+            #filter for the agent that is loggedin
+            queryset = queryset.filter(agent__user=user)
+            
+        return queryset   
+        
+def category_confirm_update(request):
+    return render(request, 'category_confirm_update.html')
+                  

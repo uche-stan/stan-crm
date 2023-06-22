@@ -5,15 +5,25 @@
 {% block  content %}
 
 <section class="text-gray-600 body-font">
-    <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
-      <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="{% static 'img/crm_banner.jpg' %}">
-      <div class="text-center lg:w-2/3 w-full">
-        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">CRM built with Django</h1>
-        <p class="mb-8 leading-relaxed">Meggings kinfolk echo park stumptown DIY, kale chips beard jianbing tousled. Chambray dreamcatcher trust fund, kitsch vice godard disrupt ramps hexagon mustache umami snackwave tilde chillwave ugh. Pour-over meditation PBR&amp;B pickled ennui celiac mlkshk freegan photo booth af fingerstache pitchfork.</p>
+    <div class="container mx-auto flex px-5 py-10 items-center justify-center flex-col">
+      {% comment %} <img class="lg:w-2/6  md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="{% static 'img/4.jpg' %}"> {% endcomment %}
+      <img class="object-cover object-bottom w-full h-80" src="{% static 'img/2.jpg' %}" alt="">
+      <div class="text-center lg:w-2/3 w-full mt-12">
+        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Everything you need to succeed</h1>
+        <p class="mb-8 leading-relaxed">
+          A robust CRM system that lets your agents follow customers along the entire sales pipeline and see when more engagement is needed. And because customer relationship management automates many of the repetitive tasks required for daily workflow, your salespeople have more time to engage with customers in a productive way.
+        </p>
+       
+
+        {% if not request.user.is_authenticated %}
         <div class="flex justify-center">
-          <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
-          <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Button</button>
+          <a href=" {% url 'signup' %}" class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+            Get started</a>
+          {% comment %} <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Button</button> {% endcomment %}
         </div>
+        {% endif %}
+
+
       </div>
     </div>
   </section>

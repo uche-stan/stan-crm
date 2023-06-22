@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import User, Lead, Agent, UserProfile
+from .models import (
+    User, 
+    Lead, 
+    Agent, 
+    UserProfile, 
+    Category
+)
 
 # Register your models here.
 
@@ -9,7 +15,7 @@ class UserAdmin(admin.ModelAdmin):
     
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
-    list_display = ( 'first_name', 'last_name','age','email','phone', 'description','profile_picture','source','organisations', 'agent', )    
+    list_display = ( 'first_name', 'last_name','age','email','phone', 'description','date_added','source','organisations', 'agent','category' )    
 
 
     
@@ -21,5 +27,7 @@ admin.site.register(Agent)
 
 
 admin.site.register(UserProfile)
+
+admin.site.register(Category)
 
     

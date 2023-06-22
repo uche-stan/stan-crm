@@ -41,16 +41,15 @@ class Lead(models.Model):
     email = models.EmailField(default="lead@example.com")
     phone = models.CharField(max_length=20, default=+44)
     description = models.CharField(max_length=255, blank=True, null=True)
-    
-    phoned = models.BooleanField(default=False)
+    date_added = models.DateTimeField(auto_now_add=True)
     source = models.CharField(choices=SOURCE_CHOICES, max_length=100)
     
-    profile_picture = models.ImageField(blank=True, null=True)
-    special_files = models.FileField(blank=True, null=True)
+    # profile_picture = models.ImageField(blank=True, null=True)
+    # special_files = models.FileField(blank=True, null=True)
     
     organisations = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)
-    
+    category = models.ForeignKey("Category",null=True, blank=True, related_name="leads", on_delete=models.SET_NULL)
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
     
@@ -64,6 +63,14 @@ class Agent(models.Model):
     def __str__(self):
         return f"{self.user.email}"
     
+
+class Category(models.Model):
+    name = models.CharField(max_length=30) 
+    organisations = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    
+    
+    def __str__(self):
+        return self.name
     
 
 

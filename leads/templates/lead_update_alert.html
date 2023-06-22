@@ -1,22 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
 
-    <h1>Update successful</h1>
 
-   
-    <p> successfully updated</p>
-   
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+
+<div class="">
+
+    <div class="w-2/5 m-auto px-8">
+        <h1 class="text-2xl text-green-600 my-2 " >Successful update</h1>
+
     
+    </div>
+
 
   
 
-    <a href=" {% url 'leads:lead-list' %} ">Back to lead</a>
+   <div class="max-w-lg mx-auto my-6 border px-12 py-12">
+    <h3 class="mb-9">Lead successfully updated</h3>
+    <a href="{% url 'leads:lead-list' %} " class="w-full text-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Back to leads</a>
+   </div>
     
-</body>
-</html>
+
+</div>
+    
+{% endblock content %}
+    

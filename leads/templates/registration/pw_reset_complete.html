@@ -6,13 +6,20 @@
 
 {% block content %}
 
+<div class="w-2/5 m-auto px-8">
 
-<h1>Password reset complete</h1>
+<h1 class="text-2xl my-4">Password reset complete</h1>
 
 <p>Your password has been set. You may go ahead and log in now.</p>
 
 
-<a href="{% url 'login' %}">Log in</a>
+<div class="my-3 border-t py-5 border-grey-200 my-9">
+    <a class="w-full flex justify-center  bg-indigo-500 text-white hover:bg-indigo-700 px-3 py-2 my-2 rounded-md"  href="{% url 'login' %}">Login</a>
+
+ </div>
+
+</div>
+
     
 {% endblock content %}
     

@@ -2,25 +2,42 @@
 
 {% load static %}
 
-
+{% load tailwind_filters %}
 
 {% block content %}
 
-<h1> Password reset </h1>
+<section>
 
-<p>Forgotten your password? Enter your email address below, and we’ll email instructions for setting a new one.</p>
+<div>
 
-<form action="" method="POST">
+    <div class="w-2/5 m-auto px-8">
+        <h1 class="text-2xl my-2">Reset your password </h1>
 
-    {% csrf_token %}
+     <p>Enter your email address below and We'll send you a link to reset your password.</p>
+    
+    </div>
+    <div class="max-w-lg mx-auto my-6 border px-12 py-12">
+    
+        <form action="" method="POST">
+    
+            {% csrf_token %}
+        
+            {{form|crispy}}
+        
+        <button class="w-full bg-indigo-500 text-white hover:bg-indigo-700 px-3 py-2 my-2 rounded-md " type="submit">Reset password</button>
+       
+    
+        </form>
+    
+    <div class="my-3 border-t py-2 border-grey-200">
+        <a class="text-indigo-500 hover:text-indigo-700 hover:underline"  href="{% url 'login' %}">Back to login</a>
+    </div>
+    </div>
+    
 
-    {{form.as_p}}
-
-<button type="submit">Reset Password</button>
-<br/>
-<a href="{% url 'login' %}">Already have an account?</a>
-
-</form>
+</div>
+    
+</section>
 
     
 {% endblock  %}

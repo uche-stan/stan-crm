@@ -17,10 +17,21 @@ urlpatterns = [
     path('lead-update/<int:pk>', views.LeadUpdateView.as_view(), name='lead-update'),
     path('lead-confirm-update/', views.lead_update_alert, name='lead-update-alert'),
     # path('lead-confirm-delete/<int:pk>', views.lead_delete, name='lead-confirm-delete'),
-    path('lead-confirm-update/<int:pk>', views.LeadDeleteView.as_view(), name='lead-confirm-delete'),
+    path('lead-confirm-delete/<int:pk>', views.LeadDeleteView.as_view(), name='lead-confirm-delete'),
     path('lead-delete-alert/', views.delete_alert, name='delete-alert'),
     
-    path('assign-agent/<int:pk>', views.AssignAgentView.as_view(), name='assign-agent')
+    path('assign-agent/<int:pk>', views.AssignAgentView.as_view(), name='assign-agent'),
+    path('agent-assigned-update/', views.agent_assigned_alert, name='agent-assigned-update'),
+    
+    
+    path('categories/', views.CategoryListView.as_view(), name='category-list'),
+    path('categories/<int:pk>', views.CategoryDetailView.as_view(), name='category-detail'),
+    
+    path('category/<int:pk>',views.LeadCategoryUpdateView.as_view(), name='lead-category-update'),
+    path('category-confirm-update/', views.category_confirm_update, name='category-confirm-update'),
+
+    
+    
     
     
     

@@ -1,4 +1,5 @@
 
+
 {% extends 'base.html' %}
 
 {% load static %}
@@ -23,14 +24,14 @@
     
         {% csrf_token %}
         <div class="my-3">
-        Are you sure you want to delete {{agent}} ?  </h3>
+        Are you sure you want to delete {{lead}}? </h3>
         <p>This action cannot be undone.</p>
     
         </div>
         <div class="flex flex-col gap-3">
             <!-- <input style="background: red; color:white; padding:8px" type="submit" value="Yes! delete data"> -->
             <button class="w-full bg-red-600 text-white hover:bg-red-700 px-3 py-2 my-2 rounded-md " type="submit">Yes! Delete permanently</button>
-        <a  href="{% url 'agents:agent-detail' agent.pk %}" class="w-full text-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"> No! I changed my mind</a>
+        <a  href="{% url 'leads:lead-detail' lead.pk %}" class="w-full text-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"> No! I changed my mind</a>
         </div>
         
     </form>
